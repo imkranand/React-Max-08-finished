@@ -28,10 +28,6 @@ const passwordReducer = (state,action) => {
 }
 
 const Login = (props) => {
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState('');
-  // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
@@ -44,12 +40,6 @@ const Login = (props) => {
     isValid: null,
   });
 
-  // This is object destructuring just like array destrucuting. 
-  /**
-   * This is used because whenever the isValid is changing we can trigger state update 
-   * But if we are using the whole object it is changing the on every key input that is triggering the 
-   * useEffect again and again which is not necessary and not optimized.
-   */
   const {isValid: emailIsValid} = emailState;
   const {isValid: passwordIsValid} = passwordState;
 
@@ -69,40 +59,17 @@ const Login = (props) => {
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: 'USER_INPUT', val: event.target.value});
-
-    // commenting the below line reference given at the bottom of the file.
-    // setFormIsValid(event.target.value.includes('@') && passwordState.isValid);
-
-    // setEnteredEmail(event.target.value);
-
-    // setFormIsValid(
-    //   event.target.value.includes('@') && enteredPassword.trim().length > 6
-    // );
   };
 
   const passwordChangeHandler = (event) => {
-
     dispatchPassword({type:'USER_INPUT', val: event.target.value});
-
-    // commenting the below line reference given at the bottom of the file.
-    // setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
-
-    // setEnteredPassword(event.target.value);
-
-    // setFormIsValid(
-    //   event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    // );
   };
 
   const validateEmailHandler = () => {
-    // setEmailIsValid(enteredEmail.includes('@'));
-
     dispatchEmail({ type: 'INPUT_BLUR'})
   };
 
   const validatePasswordHandler = () => {
-    // setPasswordIsValid(enteredPassword.trim().length > 6);
-
     dispatchPassword({ type:'INPUT_BLUR'});
   };
 
