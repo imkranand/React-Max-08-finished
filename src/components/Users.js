@@ -2,6 +2,7 @@ import { Component } from 'react';
 import User from './User';
 
 import classes from './Users.module.css';
+import ErorBoundary from './ErorBoundary';
 
 class Users extends Component {
 	constructor() {
@@ -9,6 +10,12 @@ class Users extends Component {
 		this.state = {
 			showUsers: true,
 		};
+	}
+
+	componentDidUpdate() {
+		if (this.props.users.length === 0) {
+			throw new Error('No users found');
+		}
 	}
 
 	toggleUsersHandler() {
@@ -29,12 +36,14 @@ class Users extends Component {
 		);
 
 		return (
-			<div className={classes.users}>
-				<button onClick={this.toggleUsersHandler.bind(this)}>
-					{this.state.showUsers ? 'Hide' : 'Show'} Users
-				</button>
-				{this.state.showUsers && usersList}
-			</div>
+			<ErorBoundary>
+				<div className={classes.users}>
+					<button onClick={this.toggleUsersHandler.bind(this)}>
+						{this.state.showUsers ? 'Hide' : 'Show'} Users
+					</button>
+					{this.state.showUsers && usersList}
+				</div>
+			</ErorBoundary>
 		);
 	}
 }
