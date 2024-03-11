@@ -1,28 +1,24 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
 
 
 function App() {
-  const [movies,setMovies] = useState([]);
-  
-  function fetchMovieHandler() {
-    fetch('https://swapi.py4e.com/api/films/')
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      const transformedData = data.results.map(movieData => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
-        }
-      });
-      setMovies(transformedData);
-    })
+  const [movies, setMovies] = useState([]);
+
+  async function fetchMovieHandler() {
+    const response = await fetch('https://swapi.py4e.com/api/films/');
+    const data = await response.json();
+    const transformedData = data.results.map(movieData => {
+      return {
+        id: movieData.episode_id,
+        title: movieData.title,
+        openingText: movieData.opening_crawl,
+        releaseDate: movieData.release_date,
+      }
+    });
+    setMovies(transformedData);
   }
 
 
