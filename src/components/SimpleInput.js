@@ -17,6 +17,8 @@ const SimpleInput = (props) => {
     const enteredValue = nameInputRef.current.value;
 
     console.log('useRef', enteredValue);
+    //nameInputRef.current.value = '';     ==> NOT IDEAL WAY, NOT AT ALL RECOMMENDED TO DO IT. BCOZ DOM MANIPULATION SHOULD BE DONE ONLY THROUGH REACT AND NOT DIRECTLY
+    setEnteredName('');
   };
   return (
     <form onSubmit={formSubmitHandler}>
@@ -27,6 +29,7 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameChangeHandler}
+          value={enteredName}
         />
       </div>
       <div className="form-actions">
