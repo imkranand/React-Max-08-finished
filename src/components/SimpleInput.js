@@ -1,51 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const SimpleInput = (props) => {
   
   const [enteredName,setEnteredName] = useState('');
-  const nameInputRef = useRef();
-  const [enteredNameIsValid,setEnteredNameIsValid] = useState(false);
   const [enteredNameIsTouched,setEnteredNameIsTouched] = useState(false);
 
 
-  useEffect(() => {
-    if(enteredNameIsValid){
-      console.log('Name Input is Valid!');
-    }
-  },[enteredNameIsValid]);
+  const enteredNameIsValid = enteredName.trim() !== '';
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched;
 
   const nameChangeHandler = ($event) => {
     setEnteredName($event.target.value);
-    if($event.target.value.trim() !== ''){
-      setEnteredNameIsValid(true);
-    }
   };
 
   const nameInputBlurHandler=($event) => {
     setEnteredNameIsTouched(true);
-
-    if(enteredName === ''){
-      setEnteredNameIsValid(false);
-    }
   };
   const formSubmitHandler = ($event) => {
     $event.preventDefault();
     setEnteredNameIsTouched(true);
 
-    if(enteredName === ''){
-      setEnteredNameIsValid(false);
+    if(!enteredNameIsValid){
       return ;
     }
-    setEnteredNameIsValid(true);
     console.log('useState',enteredName);
-    const enteredValue = nameInputRef.current.value;
-    console.log('useRef', enteredValue);
-    //nameInputRef.current.value = '';     ==> NOT IDEAL WAY, NOT AT ALL RECOMMENDED TO DO IT. BCOZ DOM MANIPULATION SHOULD BE DONE ONLY THROUGH REACT AND NOT DIRECTLY
     setEnteredName('');
-
+    setEnteredNameIsTouched(false);
   };
 
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameIsTouched
+  
   const nameInputClass = nameInputIsInvalid ? 'form-control invalid' : 'form-control' ; 
 
   return (
@@ -53,7 +36,6 @@ const SimpleInput = (props) => {
       <div className={nameInputClass}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameChangeHandler}
