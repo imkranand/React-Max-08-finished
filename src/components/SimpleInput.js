@@ -18,9 +18,16 @@ const SimpleInput = (props) => {
     setEnteredName($event.target.value);
   };
 
+  const nameInputBlurHandler=($event) => {
+    setEnteredNameIsTouched(true);
+
+    if(enteredName === ''){
+      setEnteredNameIsValid(false);
+      return ;
+    }
+  };
   const formSubmitHandler = ($event) => {
     $event.preventDefault();
-
     setEnteredNameIsTouched(true);
 
     if(enteredName === ''){
@@ -28,11 +35,8 @@ const SimpleInput = (props) => {
       return ;
     }
     setEnteredNameIsValid(true);
-
     console.log('useState',enteredName);
-
     const enteredValue = nameInputRef.current.value;
-
     console.log('useRef', enteredValue);
     //nameInputRef.current.value = '';     ==> NOT IDEAL WAY, NOT AT ALL RECOMMENDED TO DO IT. BCOZ DOM MANIPULATION SHOULD BE DONE ONLY THROUGH REACT AND NOT DIRECTLY
     setEnteredName('');
@@ -51,6 +55,7 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameChangeHandler}
+          onBlur={nameInputBlurHandler}
           value={enteredName}
         />
         {nameInputIsInvalid && <p className="error-text">Name must not be empty</p>}
