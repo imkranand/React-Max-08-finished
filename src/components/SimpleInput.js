@@ -4,6 +4,7 @@ const SimpleInput = (props) => {
   
   const [enteredName,setEnteredName] = useState('');
   const nameInputRef = useRef();
+  const [enteredNameIsValid,setEnteredNameIsValid] = useState(true);
 
   const nameChangeHandler = ($event) => {
     setEnteredName($event.target.value);
@@ -11,6 +12,11 @@ const SimpleInput = (props) => {
 
   const formSubmitHandler = ($event) => {
     $event.preventDefault();
+    if(enteredName === ''){
+      setEnteredNameIsValid(false);
+      return ;
+    }
+    setEnteredNameIsValid(true);
 
     console.log('useState',enteredName);
 
@@ -19,10 +25,13 @@ const SimpleInput = (props) => {
     console.log('useRef', enteredValue);
     //nameInputRef.current.value = '';     ==> NOT IDEAL WAY, NOT AT ALL RECOMMENDED TO DO IT. BCOZ DOM MANIPULATION SHOULD BE DONE ONLY THROUGH REACT AND NOT DIRECTLY
     setEnteredName('');
+
   };
+
+  const nameInputClass = enteredNameIsValid ? 'form-control' :'form-control invalid' ; 
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className="form-control">
+      <div className={nameInputClass}>
         <label htmlFor="name">Your Name</label>
         <input
           ref={nameInputRef}
@@ -31,6 +40,7 @@ const SimpleInput = (props) => {
           onChange={nameChangeHandler}
           value={enteredName}
         />
+        {!enteredNameIsValid && <p className="error-text">Name must not be empty</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button>
