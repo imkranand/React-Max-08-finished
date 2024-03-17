@@ -1,0 +1,22 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "initial",
+  "main": "redux-demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imkranand/React-Max-08-finished.git"
+  },
+  "author": "Kumar Anand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imkranand/React-Max-08-finished/issues"
+  },
+  "homepage": "https://github.com/imkranand/React-Max-08-finished#readme",
+  "dependencies": {
+    "redux": "^5.0.1"
+  }
+}
